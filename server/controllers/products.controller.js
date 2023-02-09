@@ -68,6 +68,11 @@ const getProducts = (req, res) => {
             message: "Bad Request"
           })
         }
+        console.log({
+          ok: true,
+          count: count,
+          products: products
+        })
         res.status(200).json({
           ok: true,
           count: count,

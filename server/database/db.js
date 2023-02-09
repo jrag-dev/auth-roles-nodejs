@@ -3,6 +3,7 @@ import 'dotenv/config';
 
 
 const dbConnect = async () => {
+  mongoose.set('strictQuery', true)
   try {
     await mongoose.connect(process.env.MONGODB_URI)
     console.log("Connected to mongodb database is active")

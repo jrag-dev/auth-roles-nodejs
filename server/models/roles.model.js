@@ -3,10 +3,10 @@ import mongoose from "mongoose";
 
 const roleSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true, unique: true}
+    name: String
   },
   {
-    timestamps: true,
+    versionKey: false
   }
 )
 
