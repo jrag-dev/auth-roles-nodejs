@@ -22,8 +22,6 @@ const createProduct = async  (req, res) => {
       product.imgURL = req.file.filename;
     }
 
-    console.log("FALLO")
-
     const productdb = await product.save();
 
     res.status(201).json({
@@ -32,7 +30,6 @@ const createProduct = async  (req, res) => {
       product: productdb
     })
   } catch (err) {
-    console.log(err)
     res.status(500).json({
       ok: false,
       err: "Error del servidor"
@@ -52,8 +49,6 @@ const getProducts = (req, res) => {
     .limit(limit)
     .exec( (err, products) => {
 
-      console.log(products)
-
       if (err) {
         return res.status(400).json({
           ok: false,
@@ -68,11 +63,7 @@ const getProducts = (req, res) => {
             message: "Bad Request"
           })
         }
-        console.log({
-          ok: true,
-          count: count,
-          products: products
-        })
+
         res.status(200).json({
           ok: true,
           count: count,
@@ -127,17 +118,16 @@ const updateProduct = async (req, res) => {
 
     // verificar si viene una imagen
     if (req.file) {
-      console.log("IF");
       newProduct.imgURL = req.file.filename;
   
     } else {
-      console.log("ELSE")
       newProduct.imgURL = productdb.imgURL;
     }
 
     const productUpdate = await productdb.updateOne({ $set: newProduct })
 
-    const dirname = path.join(__dirname, "../../uploads")
+    const url = req.baseUrl.split('/')[2];
+    const dirname = path.join(__dirname, `../../uploads/${url}`)
     deleteFile(dirname, productdb.imgURL)
 
     res.status(200).json({
@@ -147,7 +137,6 @@ const updateProduct = async (req, res) => {
     })
     
   } catch (err) {
-    console.log(err)
     res.status(500).json({
       ok: false,
       message: "Error del servidor"
@@ -168,7 +157,7 @@ const deleteProduct = async (req, res) => {
       })
     }
 
-    const dirname = path.join(__dirname, "../../uploads")
+    const dirname = path.join(__dirname, "../../uploads/products")
 
     await Product.findByIdAndRemove({ _id: req.params.id })
 

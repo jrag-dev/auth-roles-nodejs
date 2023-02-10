@@ -9,6 +9,7 @@ import routerProducts from "./routes/products.routes.js";
 import dbConnect from "./database/db.js";
 import routerAuth from "./routes/auth.routes.js";
 import { createRoles } from "./helpers/initialSetup.js";
+import routerUsers from "./routes/users.routes.js";
 
 const app = express();
 app.set('pkg', pkg)
@@ -36,8 +37,9 @@ app.get("/", (req, res) => {
 })
 
 // rutas de la api
-app.use("/api/products", routerProducts)
-app.use("/api/auth", routerAuth)
+app.use("/api/products", routerProducts);
+app.use("/api/auth", routerAuth);
+app.use("/api/users", routerUsers);
 
 const port = process.env.PORT || 4005;
 

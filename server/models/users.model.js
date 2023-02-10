@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import bcryptjs from 'bcryptjs';
 
 
+export const ROLES = ['user', 'admin', 'employeer'];
+
 const userSchema = new mongoose.Schema(
   {
     firstName: { 
@@ -34,6 +36,14 @@ const userSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Role'
     }]
+    ,
+    activo: {
+      type: Boolean,
+      default: true
+    },
+    imgURL: {
+      type: String
+    }
   },
   {
     timestamps: true,

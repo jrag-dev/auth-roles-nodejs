@@ -9,25 +9,24 @@ const __dirname = path.dirname(__filename);
 
 //TODO: configuraciones para multer 
 
-const dirPath = path.join(__dirname, '../../uploads')
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-      if (!fs.existsSync(dirPath)) {
-        fs.mkdir(dirPath, function (err) {
-          if (err) {
-            console.log(err)
-          } else {
-            cb(null, dirPath)
-          }
-        })
-      } else {
-        cb(null, dirPath)
-      }
+    const url = req.baseUrl.split('/')[2];
+    const dirPath = path.join(__dirname, `../../uploads/${url}`)
+    if (!fs.existsSync(dirPath)) {
+      fs.mkdir(dirPath, function (err) {
+        if (err) {
+          console.log(err)
+        } else {
+          cb(null, dirPath)
+        }
+      })
+    } else {
+      cb(null, dirPath)
+    }
   },
   filename: (req, file, cb) => {
     const extension = file.mimetype.split('/')[1];
-    console.log(file)
       cb(null, `${file.originalname}-${shortid.generate()}.${extension}`);
   },
   fileFilter(req, file, cb) {

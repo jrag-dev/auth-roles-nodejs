@@ -54,7 +54,6 @@ const signupUser = async (req, res) => {
 
     
   } catch (err) {
-    console.log(err)
     res.status(500).json({
       ok: false,
       message: 'Error Server'
@@ -76,13 +75,9 @@ const signinUser = async (req, res) => {
       })
     }
 
-    console.log(userdb)
-
     // const verifyPassword = bcryptjs.compareSync(password, userdb.password);
     const verifyPassword = await User.comparePassword(password, userdb.password);
     
-    console.log(verifyPassword)
-
     if (!verifyPassword) {
       return res.status(400).json({
         ok: false,
@@ -108,14 +103,12 @@ const signinUser = async (req, res) => {
     })
 
   } catch (err) {
-    console.log(err)
     res.status(500).json({
       ok: false,
       message: 'Error Server'
     })
   }
 }
-
 
 export {
   signupUser,
